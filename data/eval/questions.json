@@ -1,0 +1,62 @@
+[
+  {
+    "id": "q1",
+    "question": "What is the remote work policy for new hires?",
+    "reference_answer": "New hires can work remotely up to three days per week during their first 90 days if their manager confirms onboarding milestones are on track.",
+    "expected_sources": ["employee_handbook"]
+  },
+  {
+    "id": "q2",
+    "question": "How many PTO days can employees carry over?",
+    "reference_answer": "Employees can carry over up to 5 unused PTO days into the next calendar year.",
+    "expected_sources": ["employee_handbook"]
+  },
+  {
+    "id": "q3",
+    "question": "What is the domestic travel approval threshold?",
+    "reference_answer": "Domestic travel below 1200 USD can be booked directly if it is in an approved quarterly budget. Trips above 1200 USD require manager approval.",
+    "expected_sources": ["travel_and_expense_policy"]
+  },
+  {
+    "id": "q4",
+    "question": "What approvals are needed for international travel?",
+    "reference_answer": "International travel always requires both manager approval and finance approval.",
+    "expected_sources": ["travel_and_expense_policy"]
+  },
+  {
+    "id": "q5",
+    "question": "What should managers do during a security incident?",
+    "reference_answer": "Managers should ensure the employee stops using the compromised system, preserves evidence, and escalates to the on-call security lead.",
+    "expected_sources": ["security_incident_playbook"]
+  },
+  {
+    "id": "q6",
+    "question": "How quickly must employees report a suspected security incident?",
+    "reference_answer": "Employees must report suspected security incidents within 15 minutes in the security Slack channel and by filing a Sev intake form.",
+    "expected_sources": ["security_incident_playbook"]
+  },
+  {
+    "id": "q7",
+    "question": "What is required before a medium-risk launch?",
+    "reference_answer": "Teams must schedule a cross-functional readiness review at least five business days before launch with product, engineering, support, marketing, and sometimes security.",
+    "expected_sources": ["product_launch_process"]
+  },
+  {
+    "id": "q8",
+    "question": "How is launch success measured?",
+    "reference_answer": "Launch success is measured during the first two weeks using activation, support ticket volume, defect rate, and qualitative customer feedback.",
+    "expected_sources": ["product_launch_process"]
+  },
+  {
+    "id": "q9",
+    "question": "When does health coverage start?",
+    "reference_answer": "Health, dental, and vision coverage start on the first day of the month after the employee's start date.",
+    "expected_sources": ["benefits_faq"]
+  },
+  {
+    "id": "q10",
+    "question": "What is the learning and development stipend?",
+    "reference_answer": "The company offers a 1500 USD annual learning and development stipend for role-related courses, conferences, books, and memberships with manager approval before purchase.",
+    "expected_sources": ["benefits_faq"]
+  }
+]

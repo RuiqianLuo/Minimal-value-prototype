@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+logs/
+
+# Python caches and local tooling
+.pytest_cache/
+.mypy_cache/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

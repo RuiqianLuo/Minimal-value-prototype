@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ app_name }}</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --card: #fffaf2;
+      --ink: #182028;
+      --muted: #5f6b73;
+      --line: #d9cfbe;
+      --accent: #0f766e;
+      --accent-soft: #d7efe9;
+      --warning: #9a3412;
+      --shadow: 0 18px 40px rgba(24, 32, 40, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(15,118,110,0.12), transparent 30%),
+        linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+    .panel {
+      background: rgba(255, 250, 242, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .hero-copy {
+      padding: 28px;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      line-height: 0.95;
+      margin: 0 0 14px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .stat {
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--accent-soft);
+      font-family: "Segoe UI", sans-serif;
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    .ask-panel {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      resize: vertical;
+      font: 15px/1.5 "Segoe UI", sans-serif;
+      background: #fffdf8;
+      color: var(--ink);
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: 600 15px "Segoe UI", sans-serif;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #155e75);
+      width: fit-content;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 24px;
+    }
+    .results, .sidebar {
+      padding: 24px;
+    }
+    .answer {
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-family: "Segoe UI", sans-serif;
+      margin-bottom: 18px;
+    }
+    .citation {
+      border-top: 1px solid var(--line);
+      padding: 14px 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .citation small, .muted {
+      color: var(--muted);
+    }
+    .debug {
+      background: #fff;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      font: 13px/1.5 Consolas, monospace;
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    .samples button {
+      margin: 8px 8px 0 0;
+      background: #efe3d0;
+      color: var(--ink);
+    }
+    .warning {
+      color: var(--warning);
+      font-family: "Segoe UI", sans-serif;
+      margin-top: 8px;
+    }
+    @media (max-width: 900px) {
+      .hero, .content { grid-template-columns: 1fr; }
+      .shell { padding: 20px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="panel hero-copy">
+        <span class="eyebrow">Internal AI Knowledge Assistant</span>
+        <h1>Grounded answers for teams that move fast.</h1>
+        <p>This prototype answers employee questions from internal company documents, shows source evidence, and exposes retrieval quality for evaluation.</p>
+        <div class="hero-meta">
+          <div class="stat"><strong>{{ doc_count }}</strong> Demo company docs</div>
+          <div class="stat"><strong>RAG</strong> Retrieval + cited response</div>
+        </div>
+      </div>
+      <div class="panel ask-panel">
+        <label for="question"><strong>Ask a question</strong></label>
+        <textarea id="question" placeholder="Example: What is our remote work policy for new hires?"></textarea>
+        <button id="askBtn">Ask Assistant</button>
+        <label for="fileInput"><strong>Ingest a document</strong></label>
+        <input id="fileInput" type="file" accept=".md,.txt" />
+        <button id="uploadBtn" type="button">Upload And Reindex</button>
+        <div id="uploadStatus" class="muted"></div>
+        <div class="samples">
+          <div class="muted">Try a sample:</div>
+          <button class="sample-btn" data-question="What is the travel approval threshold?">Travel approval threshold</button>
+          <button class="sample-btn" data-question="What should managers do during a security incident?">Security incident response</button>
+          <button class="sample-btn" data-question="How does the PTO carryover policy work?">PTO carryover</button>
+        </div>
+        <div class="warning">This assistant answers only from internal company documents. Out-of-scope questions will return a grounded fallback message.</div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="panel results">
+        <h2>Answer</h2>
+        <div id="answer" class="answer">Your grounded answer will appear here.</div>
+        <div id="meta" class="muted"></div>
+        <h3>Sources</h3>
+        <div id="citations"></div>
+      </div>
+      <aside class="panel sidebar">
+        <h2>Retrieval Debug</h2>
+        <div id="debug" class="debug">Waiting for a query...</div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const askBtn = document.getElementById("askBtn");
+    const questionInput = document.getElementById("question");
+    const answerEl = document.getElementById("answer");
+    const citationsEl = document.getElementById("citations");
+    const debugEl = document.getElementById("debug");
+    const metaEl = document.getElementById("meta");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const fileInput = document.getElementById("fileInput");
+    const uploadStatus = document.getElementById("uploadStatus");
+
+    async function askQuestion() {
+      const question = questionInput.value.trim();
+      if (!question) return;
+
+      askBtn.disabled = true;
+      askBtn.textContent = "Thinking...";
+      answerEl.textContent = "Running retrieval and answer generation...";
+      citationsEl.innerHTML = "";
+      debugEl.textContent = "Loading...";
+      metaEl.textContent = "";
+
+      const response = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+      const data = await response.json();
+
+      answerEl.textContent = data.answer;
+      metaEl.textContent = `Mode: ${data.mode} | Latency: ${data.latency_ms} ms`;
+      debugEl.textContent = JSON.stringify(data.retrieval_debug, null, 2);
+      citationsEl.innerHTML = data.citations.map((citation, idx) => `
+        <div class="citation">
+          <strong>[${idx + 1}] ${citation.title}</strong><br />
+          <small>${citation.chunk_id} | score=${citation.score}</small>
+          <p>${citation.snippet}...</p>
+        </div>
+      `).join("") || '<div class="muted">No grounded sources were strong enough to support an answer.</div>';
+
+      askBtn.disabled = false;
+      askBtn.textContent = "Ask Assistant";
+    }
+
+    askBtn.addEventListener("click", askQuestion);
+    uploadBtn.addEventListener("click", async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        uploadStatus.textContent = "Select a .md or .txt document first.";
+        return;
+      }
+      const formData = new FormData();
+      formData.append("file", file);
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Uploading...";
+      const response = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await response.json();
+      uploadStatus.textContent = data.message || data.detail || "Upload complete.";
+      uploadBtn.disabled = false;
+      uploadBtn.textContent = "Upload And Reindex";
+    });
+    document.querySelectorAll(".sample-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        questionInput.value = button.dataset.question;
+        askQuestion();
+      });
+    });
+  </script>
+</body>
+</html>
