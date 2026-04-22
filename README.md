@@ -248,5 +248,4 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 python scripts/evaluate.py
 ```
 
-Results are saved to `logs/latest_eval.json` and appended to `logs/eval_runs.jsonl`.
 =======
