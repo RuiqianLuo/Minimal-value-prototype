@@ -62,7 +62,7 @@ Current heuristic metrics:
 - `hallucination_flag`: 1 when no expected source is retrieved
 - `latency_ms`: end-to-end answer latency
 
-This is intentionally lightweight so the framework is easy to explain in interviews. A strong next step would be adding LLM-as-judge or human review labels.
+ A strong next step would be adding LLM-as-judge or human review labels.
 
 ## Repo Tree
 
