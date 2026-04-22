@@ -1,10 +1,7 @@
+
 # Internal Knowledge Assistant
 
-<<<<<<< HEAD
-A portfolio-ready AI product case study and working prototype for an internal knowledge assistant. The project demonstrates how to turn a realistic company pain point into a grounded RAG demo, a measurable evaluation loop
-=======
 A lightweight internal knowledge assistant for teams that need fast, source-grounded answers from company documents, with a simple prototype app and a small built-in evaluation workflow.
->>>>>>> 0898379 (Refine README structure and add example questions)
 
 ## Key Features
 
@@ -85,11 +82,7 @@ The evaluation script reports:
 - `hallucination_flag`: whether no expected source was retrieved
 - `latency_ms`: end-to-end response latency for each question
 
-<<<<<<< HEAD
- A strong next step would be adding LLM-as-judge or human review labels.
-=======
 This evaluation is intentionally lightweight. It is useful for iteration and discussion, but it is not a substitute for larger-scale human review or production monitoring.
->>>>>>> 0898379 (Refine README structure and add example questions)
 
 ## Project Documents
 
@@ -108,7 +101,6 @@ python -m venv .venv
 pip install -r requirements.txt
 copy .env.example .env
 uvicorn app.main:app --reload
-```
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
@@ -214,7 +206,6 @@ CHUNK_OVERLAP=100
 
 ## Next Steps
 
-<<<<<<< HEAD
 ### 2. Configure environment
 
 ```bash
@@ -259,9 +250,3 @@ python scripts/evaluate.py
 
 Results are saved to `logs/latest_eval.json` and appended to `logs/eval_runs.jsonl`.
 =======
-- Replace TF-IDF retrieval with embedding-based retrieval
-- Add a clearer confidence or abstention signal in the UI
-- Expand the benchmark set with harder and more ambiguous questions
-- Add lightweight human review or feedback collection
-- Support additional document sources beyond local Markdown files
->>>>>>> 0898379 (Refine README structure and add example questions)
