@@ -1,6 +1,6 @@
 # Internal Knowledge Assistant MVP
 
-A portfolio-ready AI product case study and working prototype for an internal knowledge assistant. The project demonstrates how to turn a realistic company pain point into a grounded RAG demo, a measurable evaluation loop, and a clear MVP story for AI Product Manager, AI Product Analyst, and junior PM roles.
+A portfolio-ready AI product case study and working prototype for an internal knowledge assistant. The project demonstrates how to turn a realistic company pain point into a grounded RAG demo, a measurable evaluation loop
 
 ## Why this project works for an AI Product portfolio
 
