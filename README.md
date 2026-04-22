@@ -1,70 +1,164 @@
-# Internal Knowledge Assistant MVP
+# Internal Knowledge Assistant
 
+<<<<<<< HEAD
 A portfolio-ready AI product case study and working prototype for an internal knowledge assistant. The project demonstrates how to turn a realistic company pain point into a grounded RAG demo, a measurable evaluation loop
+=======
+A lightweight internal knowledge assistant for teams that need fast, source-grounded answers from company documents, with a simple prototype app and a small built-in evaluation workflow.
+>>>>>>> 0898379 (Refine README structure and add example questions)
 
-## Why this project works for an AI Product portfolio
+## Key Features
 
-This project is intentionally framed as a product case study, not a research experiment. It demonstrates:
+- Simple web interface for asking questions against an internal document set
+- Local document ingestion from `.md` and `.txt` files
+- Chunking and TF-IDF retrieval over a demo company knowledge base
+- Grounded answer generation with visible citations and retrieval debug output
+- Support for OpenAI, Gemini, and offline extractive fallback modes
+- Guardrail for low-relevance or out-of-scope questions
+- Evaluation script with 10 benchmark questions, expected sources, and structured logs
 
-- A concrete business problem: repetitive internal policy and process questions
-- A believable AI workflow: retrieval-augmented generation with citations
-- Product thinking: target users, tradeoffs, MVP scope, and measurable outcomes
-- Evaluation discipline: benchmark questions, structured logs, and explicit failure modes
-- A working demo: lightweight web app with source-grounded answers
+## Benchmark Snapshot
 
-## Product Summary
+Current prototype benchmark results from [`logs/latest_eval.json`](./logs/latest_eval.json):
 
-Employees often waste time searching internal docs or asking repeat questions in Slack. This prototype answers those questions using a local knowledge base of sample company documents, cites the evidence it used, and supports evaluation against a small benchmark set.
+| Metric | Result |
+| --- | ---: |
+| Question count | 10 |
+| Average usefulness | 0.91 |
+| Average faithfulness | 1.00 |
+| Hallucination rate | 0.00 |
+| Average latency (extractive benchmark run) | 0 ms |
 
-## Target Users
+These are small-sample prototype results from the local evaluation script, not production performance claims.
 
-- Employees looking for fast policy answers
-- Managers who need reliable operational guidance
-- AI product stakeholders evaluating whether an internal assistant is trustworthy enough to scale
+## Why This Use Case Matters
+
+Internal teams repeatedly answer the same questions about policies, onboarding, benefits, travel, and incident response. A grounded internal assistant can reduce repetitive support work, improve answer consistency, and make it easier to inspect what source material informed a response.
+
+## Example Questions
+
+- What is the remote work policy for new hires?
+- How many PTO days can employees carry over into the next year?
+- What approvals are required for international travel?
+- What is the reimbursement limit for meals during U.S. business travel?
+- When does health coverage start for new employees?
+- What is the annual learning and development stipend?
+- What is required before a medium-risk product launch?
+- What should managers do during a security incident?
 
 ## MVP Scope
 
-- Markdown document ingestion
-- Chunking and retrieval
-- Grounded answer generation
-- Answer citations in the UI
-- Guardrail for low-relevance or out-of-scope questions
-- Local benchmark evaluation pipeline
-- Structured JSON logs for app and evaluation runs
+- Local knowledge base stored in `data/docs/`
+- Document normalization and chunking
+- TF-IDF retrieval over chunked internal documents
+- LLM-backed answer generation when a provider key is configured
+- Offline extractive fallback when no provider is configured or generation is unavailable
+- Source citations and retrieval debug data in the UI
+- Benchmark evaluation with structured output logs
 
-## Architecture
+## System Architecture
 
-1. Documents are stored locally in `data/docs/`
-2. The ingestion layer normalizes and chunks documents
-3. The retriever indexes chunks with TF-IDF
-4. The answer layer uses OpenAI if a key is present, otherwise extractive fallback mode
-5. The app returns answers plus source snippets and retrieval metadata
-6. The evaluation script runs benchmark questions and scores response quality
+1. Documents are stored locally in `data/docs/`.
+2. The ingestion layer loads and normalizes Markdown files, then splits them into chunks.
+3. The retriever indexes those chunks with TF-IDF and returns the top matches for a question.
+4. The answer layer uses the retrieved context to generate a grounded response through Gemini or OpenAI, or falls back to extractive mode.
+5. The UI displays the answer, citations, latency, and retrieval debug information.
+6. The evaluation script runs benchmark questions from `data/eval/questions.json` and writes results to `logs/latest_eval.json`.
 
 ## Product Tradeoffs
 
-- Accuracy vs speed: TF-IDF is fast and simple, but embedding retrieval would likely improve semantic recall.
-- Cost vs quality: OpenAI generation improves fluency and synthesis, while offline extractive fallback keeps the demo runnable without API spend.
-- Retrieval breadth vs precision: increasing `top_k` can improve recall but may introduce noisier context and weaker citations.
+- Accuracy vs. speed: TF-IDF retrieval is fast and easy to explain, but semantic retrieval would likely improve recall on paraphrased questions.
+- Cost vs. quality: model-backed generation improves fluency and synthesis, while extractive fallback keeps the prototype runnable without API spend.
+- Retrieval breadth vs. precision: returning more chunks can improve recall, but can also add distractors and weaker citations.
 
-## Evaluation Framework
+## Evaluation Approach
 
-The project includes 10 benchmark questions in `data/eval/questions.json` with:
+The repository includes a small benchmark set in `data/eval/questions.json` with:
 
+- 10 test questions
 - reference answers
-- expected grounding documents
-- structured output scoring
+- expected source documents
 
-Current heuristic metrics:
+The evaluation script reports:
 
-- `usefulness_score`: reference-answer token overlap
-- `faithfulness_score`: expected-source hit rate
-- `hallucination_flag`: 1 when no expected source is retrieved
-- `latency_ms`: end-to-end answer latency
+- `usefulness_score`: token overlap between generated and reference answers
+- `faithfulness_score`: whether expected source documents were retrieved
+- `hallucination_flag`: whether no expected source was retrieved
+- `latency_ms`: end-to-end response latency for each question
 
+<<<<<<< HEAD
  A strong next step would be adding LLM-as-judge or human review labels.
+=======
+This evaluation is intentionally lightweight. It is useful for iteration and discussion, but it is not a substitute for larger-scale human review or production monitoring.
+>>>>>>> 0898379 (Refine README structure and add example questions)
 
-## Repo Tree
+## Project Documents
+
+- [PRD](./docs/prd.md)
+- [User Personas](./docs/user_personas.md)
+- [User Stories](./docs/user_stories.md)
+- [Feature Prioritization](./docs/feature_prioritization.md)
+- [Success Metrics](./docs/success_metrics.md)
+- [Error Analysis](./docs/error_analysis.md)
+
+## Quickstart
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+uvicorn app.main:app --reload
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+To run the benchmark:
+
+```bash
+python scripts/evaluate.py
+```
+
+## Configuration
+
+By default, the project is configured for extractive fallback mode. That means the app still runs even if no LLM API key is set.
+
+Example default:
+
+```env
+LLM_PROVIDER=extractive
+```
+
+### Gemini
+
+The project uses Google's current `google-genai` SDK for Gemini.
+
+```env
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=your_key_here
+GEMINI_MODEL=gemini-2.5-flash
+GEMINI_FALLBACK_MODEL=gemini-1.5-flash
+```
+
+If the primary Gemini model is temporarily unavailable, the app retries with the fallback Gemini model and then degrades to offline extractive mode instead of crashing.
+
+### OpenAI
+
+```env
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your_key_here
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+### Other useful settings
+
+```env
+TOP_K=4
+MIN_RETRIEVAL_SCORE=0.08
+CHUNK_SIZE=550
+CHUNK_OVERLAP=100
+```
+
+## Repo Structure
 
 ```text
 .
@@ -99,23 +193,28 @@ Current heuristic metrics:
 │   ├── user_personas.md
 │   └── user_stories.md
 ├── logs
+│   ├── app_events.jsonl
+│   ├── eval_runs.jsonl
+│   └── latest_eval.json
 ├── scripts
 │   └── evaluate.py
 ├── .env.example
+├── .gitignore
 ├── README.md
 └── requirements.txt
 ```
 
-## How to run locally
+## Limitations
 
-### 1. Install dependencies
+- The demo knowledge base is small and local; it does not connect to live internal systems.
+- Retrieval uses TF-IDF rather than embeddings or reranking.
+- The benchmark set is small and heuristic-based.
+- There is no authentication, permissions model, or document access control.
+- The current app is a single-turn assistant, not a multi-step workflow tool.
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
+## Next Steps
 
+<<<<<<< HEAD
 ### 2. Configure environment
 
 ```bash
@@ -159,3 +258,10 @@ python scripts/evaluate.py
 ```
 
 Results are saved to `logs/latest_eval.json` and appended to `logs/eval_runs.jsonl`.
+=======
+- Replace TF-IDF retrieval with embedding-based retrieval
+- Add a clearer confidence or abstention signal in the UI
+- Expand the benchmark set with harder and more ambiguous questions
+- Add lightweight human review or feedback collection
+- Support additional document sources beyond local Markdown files
+>>>>>>> 0898379 (Refine README structure and add example questions)
