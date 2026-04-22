@@ -159,17 +159,3 @@ python scripts/evaluate.py
 ```
 
 Results are saved to `logs/latest_eval.json` and appended to `logs/eval_runs.jsonl`.
-
-## Demo talking points
-
-- The UI shows both the answer and the retrieved evidence, which makes trust easier to discuss.
-- The code is intentionally modular so each RAG stage is easy to explain.
-- The evaluation layer makes this feel like a product iteration loop, not just a one-off demo.
-
-## What makes this a good resume project
-
-- It connects user pain points to a believable AI solution
-- It includes both product artifacts and working software
-- It demonstrates grounded AI design rather than generic chatbot wrapping
-- It shows evaluation maturity, which is highly relevant for AI Product roles
-- It is simple enough to explain clearly in interviews, but deep enough to discuss tradeoffs and next steps
